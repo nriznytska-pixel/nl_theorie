@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rijtheorie NL — CBR Theorie-examen 🇳🇱</title>
+<meta name="description" content="Подготовка к теоретическому экзамену CBR. Двуязычный курс NL/RU.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg1:#0a0e17;--bg2:#101829;--bg3:#172036;
+  --card:#141c2e;--card2:#1a2540;--card3:#1e2d4a;
+  --orange:#f0a030;--orange2:#ffd98e;--green:#3cb371;--green2:#7defa0;
+  --red:#e84040;--blue:#3498db;--text:#e0e4ec;--dim:#8a90a0;--dimmer:#555;
+  --radius:14px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;background:var(--bg1);color:var(--text);
+  min-height:100vh;-webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;transition:all .2s}
+button:active{transform:scale(.97)}
+input{font-family:inherit}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#2a3550;border-radius:3px}
+
+.header{
+  background:linear-gradient(135deg,#f0a030,#e8941a);
+  padding:16px 20px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 4px 24px rgba(240,160,48,.25);
+}
+.header h1{font-size:18px;font-weight:700;color:#111;letter-spacing:-.3px}
+.header .sub{font-size:11px;color:#444;margin-top:1px}
+.back-btn{
+  background:rgba(0,0,0,.12);border-radius:8px;padding:7px 14px;
+  color:#111;font-weight:600;font-size:13px;
+}
+.main{max-width:680px;margin:0 auto;padding:20px 14px 40px}
+.welcome{
+  background:linear-gradient(135deg,rgba(240,160,48,.08),rgba(240,160,48,.03));
+  border:1px solid rgba(240,160,48,.12);border-radius:var(--radius);
+  padding:20px 22px;margin-bottom:20px;
+}
+.welcome h2{color:var(--orange2);font-size:17px;margin-bottom:6px}
+.welcome p{color:var(--dim);font-size:13px;line-height:1.6}
+
+.topic-btn{
+  width:100%;background:var(--card);border:1px solid rgba(255,255,255,.05);
+  border-radius:13px;padding:14px 18px;display:flex;align-items:center;gap:14px;
+  text-align:left;margin-bottom:6px;transition:all .2s;
+}
+.topic-btn:hover{background:var(--card2);border-color:rgba(255,255,255,.1);transform:translateX(3px)}
+.topic-icon{font-size:24px;flex-shrink:0}
+.topic-title{font-size:15px;font-weight:600}
+.topic-sub{font-size:12px;color:#666;margin-top:2px}
+.topic-stats{color:var(--dimmer);font-size:11px;margin-left:auto;text-align:right;white-space:nowrap}
+
+.nav-btn{
+  width:100%;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:14px;
+  text-align:left;margin-top:10px;transition:all .2s;
+}
+.nav-btn:hover{background:rgba(255,255,255,.05)}
+.nav-btn .icon{font-size:24px}
+.nav-btn .label{font-size:15px;font-weight:600}
+.nav-btn .desc{font-size:12px;color:#666;margin-top:1px}
+.nav-btn .arrow{margin-left:auto;color:#444;font-size:18px}
+
+.section-label{
+  color:#555;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;
+  margin:18px 0 10px;font-weight:600;
+}
+
+.mode-tabs{
+  display:flex;gap:4px;margin-bottom:20px;padding:3px;
+  background:rgba(255,255,255,.025);border-radius:12px;
+}
+.mode-tab{
+  flex:1;padding:9px 0;border-radius:9px;font-size:13px;font-weight:500;
+  color:#777;background:transparent;transition:all .25s;
+}
+.mode-tab.active{font-weight:700;color:#111}
+
+.theory-card{
+  background:rgba(255,255,255,.04);border-radius:var(--radius);
+  padding:16px 20px;margin-bottom:8px;
+  border-left:4px solid var(--orange);transition:all .2s;
+}
+.theory-card:hover{background:rgba(255,255,255,.06)}
+.theory-nl{color:var(--orange2);font-size:15px;line-height:1.7}
+.theory-ru{color:#b0b8c8;font-size:14px;line-height:1.6;margin-top:8px}
+
+.flash-card{
+  width:100%;max-width:540px;min-height:220px;border-radius:18px;
+  padding:32px 28px;cursor:pointer;transition:all .35s ease;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+}
+.flash-card.front{
+  background:linear-gradient(135deg,var(--card2),var(--card3));
+  border:2px solid #3a4560;box-shadow:0 8px 32px rgba(0,0,0,.3);
+}
+.flash-card.back{
+  background:linear-gradient(135deg,#1b3a2a,#1a2f26);
+  border:2px solid var(--green);box-shadow:0 0 40px rgba(60,179,113,.12);
+}
+.flash-hint{color:#444;font-size:12px;margin-top:20px}
+
+.quiz-option{
+  width:100%;background:rgba(255,255,255,.04);border:2px solid transparent;
+  border-radius:12px;padding:12px 18px;color:var(--text);font-size:14px;
+  text-align:left;transition:all .2s;margin-bottom:6px;
+}
+.quiz-option:hover:not(.disabled){background:rgba(255,255,255,.08)}
+.quiz-option.correct{background:rgba(60,179,113,.2);border-color:var(--green)}
+.quiz-option.wrong{background:rgba(220,60,60,.2);border-color:#dc3c3c}
+
+.progress-bar{
+  width:100%;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;
+}
+.progress-fill{height:100%;background:var(--orange);border-radius:2px;transition:width .4s ease}
+
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+.vocab-item{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+  border-radius:11px;padding:12px 16px;cursor:pointer;transition:all .2s;
+}
+.vocab-item:hover{background:rgba(255,255,255,.06)}
+.vocab-item.open{background:rgba(60,179,113,.06);border-color:rgba(60,179,113,.2)}
+.vocab-nl{color:var(--orange2);font-size:15px;font-weight:500}
+.vocab-ru{color:#a0c8b4;font-size:14px;margin-top:6px}
+
+.search-input{
+  width:100%;padding:12px 18px;border-radius:12px;
+  background:rgba(255,255,255,.05);border:2px solid #2a3550;
+  color:var(--text);font-size:15px;outline:none;transition:border .2s;
+}
+.search-input:focus{border-color:var(--orange)}
+.search-input::placeholder{color:#555}
+
+.btn{
+  background:var(--orange);color:#111;border-radius:10px;
+  padding:10px 20px;font-size:14px;font-weight:600;
+}
+.btn.secondary{background:#3a4560;color:#ccc}
+.btn.green{background:var(--green);color:#111}
+
+.exam-box{
+  background:rgba(240,160,48,.06);border:1px solid rgba(240,160,48,.12);
+  border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;
+}
+.tip-box{
+  background:rgba(255,255,255,.03);border-radius:var(--radius);
+  padding:18px 22px;
+}
+.tip-item{color:#b0b8c8;font-size:14px;line-height:1.8;margin-bottom:4px}
+
+.result-emoji{font-size:52px;margin-bottom:8px}
+.result-score{color:var(--orange2);font-size:24px;font-weight:700}
+.result-sub{color:var(--dim);font-size:13px;margin:4px 0 16px}
+
+.footer{text-align:center;padding:20px;color:#222;font-size:11px}
+@media(max-width:480px){
+  .main{padding:14px 10px 30px}
+  .flash-card{min-height:180px;padding:22px 18px}
+  .vocab-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useMemo } = React;
+
+const T = [
+{id:"verkeersregels",tNL:"Algemene verkeersregels",tRU:"Общие правила дорожного движения",icon:"📋",color:"#F7A828",
+theory:[
+{nl:"In NL rijden we rechts. Bij wisselen rijstrook: richting aangeven + spiegels.",ru:"В NL ездим по правой стороне. При перестроении: поворотник + зеркала."},
+{nl:"Max snelheid bebouwde kom: 30 of 50 km/u. Buiten: 60, 80 of 100. Snelweg: 100 of 130.",ru:"Макс. в городе: 30 или 50. За городом: 60, 80 или 100. Магистраль: 100 или 130."},
+{nl:"19:00-06:00 op veel snelwegen 130 km/u. Overdag vaak 100 km/u (stikstofregels).",ru:"19:00-06:00 на многих магистралях 130 км/ч. Днём 100 (азот)."},
+{nl:"Gordel altijd verplicht. Kinderen < 1,35 m: kinderzitje.",ru:"Ремень всегда обязателен. Дети < 1,35 м: детское кресло."},
+{nl:"Telefoon vasthouden tijdens rijden: verboden. Handsfree mag, afgeraden.",ru:"Телефон в руке за рулём: запрещено. Громкая связь можно, не рекомендуется."},
+{nl:"Zebrapad: automobilisten verlenen voorrang aan voetgangers.",ru:"Зебра: водители уступают пешеходам."},
+{nl:"Fietsers/bromfietsers = kwetsbare verkeersdeelnemers. Extra voorzichtig!",ru:"Велосипедисты/мопедисты = уязвимые участники. Осторожно!"},
+{nl:"Kruispunt niet oprijden als je het niet kunt verlaten (blokkeren).",ru:"Не въезжать на перекрёсток, если не можете покинуть."},
+{nl:"Woonerf: max 15 km/u (stapvoets). Voetgangers mogen hele weg gebruiken.",ru:"Жилая зона: макс. 15 км/ч. Пешеходы — вся дорога."},
+{nl:"Doorgetrokken streep: niet overschrijden. Onderbroken: mag wel.",ru:"Сплошная: нельзя. Прерывистая: можно."},
+{nl:"Haaietanden (witte driehoeken op weg) = verleen voorrang.",ru:"«Зубы акулы» (белые треугольники) = уступите дорогу."},
+{nl:"Verlaten uitrit/parkeerplaats: GEEN voorrang.",ru:"Выезд с территории/парковки: НЕТ приоритета."}
+],
+cards:[
+{q:"Max snelheid bebouwde kom? / В городе?",a:"30 of 50 km/u / 30 или 50 км/ч"},
+{q:"Telefoon vasthouden? / Телефон в руке?",a:"Verboden / Запрещено"},
+{q:"Snelweg overdag? / Магистраль днём?",a:"100 km/u / 100 км/ч"},
+{q:"Gordel? / Ремень?",a:"Altijd verplicht / Всегда обязателен"},
+{q:"Kinderzitje tot? / Детское кресло до?",a:"1,35 m / 1,35 м"},
+{q:"Woonerf snelheid? / Жилая зона?",a:"15 km/u (stapvoets) / 15 км/ч (шагом)"},
+{q:"Haaietanden? / Зубы акулы?",a:"Verleen voorrang / Уступите дорогу"},
+{q:"Doorgetrokken streep? / Сплошная?",a:"Niet overschrijden / Не пересекать"},
+{q:"Uitrit verlaten — voorrang? / Выезд — приоритет?",a:"Nee / Нет"}
+],
+quiz:[
+{q:"Snelweg 's nachts? / Магистраль ночью?",o:["100 km/u","120 km/u","130 km/u","80 km/u"],c:2},
+{q:"Voorrang zebrapad? / Приоритет на зебре?",o:["Automobilist / Водитель","Voetganger / Пешеход","Fietser / Велосипедист","Niemand / Никто"],c:1},
+{q:"Handsfree bellen? / Громкая связь?",o:["Ja / Да","Nee / Нет","Alleen snelweg / Магистраль","Alleen stilstaand / Стоя"],c:0},
+{q:"Woonerf snelheid? / Жилая зона?",o:["30 km/u","15 km/u","50 km/u","20 km/u"],c:1},
+{q:"Voorrang bij uitrit? / Приоритет при выезде?",o:["Ja / Да","Nee / Нет","Rechts / Направо","Na 3 sec"],c:1},
+{q:"Haaietanden = ? / Зубы акулы = ?",o:["Voorrang / Приоритет","Verleen voorrang / Уступи","Verboden / Запрещено","Parkeren / Парковка"],c:1},
+{q:"Doorgetrokken streep? / Сплошная?",o:["Mag over / Можно","Niet over / Нельзя","Soms / Иногда","Alleen links / Слева"],c:1},
+{q:"Max buiten bebouwde kom 80-weg? / За городом 80?",o:["60 km/u","80 km/u","100 km/u","50 km/u"],c:1}
+]},
+{id:"verkeersborden",tNL:"Verkeersborden",tRU:"Дорожные знаки",icon:"🔴",color:"#E84040",
+theory:[
+{nl:"Verbodsborden: rond, rode rand. Gebodsborden: rond, blauw. Waarschuwingsborden: driehoekig, rode rand.",ru:"Запрещающие: круглые, красная кайма. Предписывающие: синие. Предупреждающие: треугольные."},
+{nl:"Rond rood rand = verbod (inhaalverbod, verboden in te rijden, snelheidslimiet).",ru:"Круглый красный = запрет (обгон, въезд, скорость)."},
+{nl:"Rond blauw = gebod (verplichte richting, fietspad, minimumsnelheid).",ru:"Круглый синий = предписание (направление, велодорожка, мин. скорость)."},
+{nl:"Driehoek rode rand = waarschuwing (bocht, kruispunt, spoorwegovergang).",ru:"Треугольник красный = предупреждение (поворот, перекрёсток, ж/д)."},
+{nl:"Omgekeerde driehoek = verleen voorrang. Geel ruit = voorrangsweg.",ru:"Перевёрнутый треугольник = уступите. Жёлтый ромб = главная дорога."},
+{nl:"STOP-bord (achthoekig, rood): volledig stoppen bij stopstreep.",ru:"СТОП (восьмиугольный): полностью остановиться."},
+{nl:"Onderborden: extra info. Zoneborden: gelden voor hele gebied.",ru:"Таблички: доп. инфо. Зональные: на всю территорию."},
+{nl:"Rode diagonaal = einde verbod/gebod.",ru:"Красная диагональ = конец запрета/предписания."},
+{nl:"Groen bord = snelweg. Blauw = autoweg. Wit = lokaal.",ru:"Зелёный = магистраль. Синий = автодорога. Белый = местное."},
+{nl:"Bord C1 (wit rond, rode rand) = gesloten voor alle voertuigen.",ru:"C1 (белый круг, красная кайма) = закрыто для всех ТС."}
+],
+cards:[
+{q:"Rond rood rand? / Круглый красный?",a:"Verbod / Запрет"},
+{q:"Blauw rond? / Синий круглый?",a:"Gebod / Предписание"},
+{q:"Driehoek rood? / Треугольник красный?",a:"Waarschuwing / Предупреждение"},
+{q:"Omgekeerde driehoek? / Перевёрнутый?",a:"Verleen voorrang / Уступите"},
+{q:"STOP-bord? / СТОП?",a:"Achthoekig, volledig stoppen / Восьмиугольный, стоп"},
+{q:"Groen wegwijzer? / Зелёный указатель?",a:"Richting snelweg / На магистраль"},
+{q:"Rode diagonaal? / Красная диагональ?",a:"Einde verbod / Конец запрета"}
+],
+quiz:[
+{q:"Vorm waarschuwingsbord? / Форма предупреждающего?",o:["Rond / Круглый","Driehoekig / Треугольный","Vierkant / Квадратный","Achthoekig / Восьмиугольный"],c:1},
+{q:"Kleur gebodsbord? / Цвет предписывающего?",o:["Rood / Красный","Groen / Зелёный","Blauw / Синий","Geel / Жёлтый"],c:2},
+{q:"Geel ruit? / Жёлтый ромб?",o:["Verboden / Запрещено","Voorrangsweg / Главная","Einde / Конец","Parkeren / Парковка"],c:1},
+{q:"Vorm STOP-bord? / Форма СТОП?",o:["Rond / Круглый","Driehoekig / Треугольный","Achthoekig / Восьмиугольный","Vierkant / Квадратный"],c:2},
+{q:"Rode diagonaal? / Красная диагональ?",o:["Begin / Начало","Einde / Конец","Extra / Доп.","Nood / ЧС"],c:1},
+{q:"Groen bord = ? / Зелёный = ?",o:["Stad / Город","Snelweg / Магистраль","Ziekenhuis / Больница","Dorp / Деревня"],c:1},
+{q:"Wit rond bord rode rand (C1)?",o:["Eenrichting / Одностороннее","Gesloten / Закрыто","Parkeerverbod / Парковка","Max snelheid / Скорость"],c:1}
+]},
+{id:"verkeerslichten",tNL:"Verkeerslichten",tRU:"Светофоры",icon:"🚦",color:"#E8D040",
+theory:[
+{nl:"Rood = stoppen. Geel = stoppen als veilig kan. Groen = rijden.",ru:"Красный = стоп. Жёлтый = стоп если безопасно. Зелёный = ехать."},
+{nl:"Knipperend geel = voorzichtig, regels gelden (rechts gaat voor).",ru:"Мигающий жёлтый = осторожно, правила действуют."},
+{nl:"Verkeerslichten boven borden. Agent boven alles.",ru:"Светофоры важнее знаков. Регулировщик важнее всего."},
+{nl:"Defect licht: als gelijkwaardig kruispunt, tenzij borden.",ru:"Неработающий: как равнозначный, если нет знаков."},
+{nl:"Spoorweg: rood knipperlicht = stoppen, trein komt!",ru:"Ж/д: мигающий красный = стоп, поезд!"},
+{nl:"Tram-licht (wit): streep=stop, driehoek=klaar, balk=rijden.",ru:"Трамвайный: полоса=стоп, треугольник=готов, планка=ехать."},
+{nl:"Pijl-groen: alleen die richting. Knipperend groen bestaat NIET in NL.",ru:"Зелёная стрелка: только то направление. Мигающий зелёный НЕ существует."}
+],
+cards:[
+{q:"Geel licht? / Жёлтый?",a:"Stoppen als veilig kan / Стоп если безопасно"},
+{q:"Knipperend geel? / Мигающий жёлтый?",a:"Voorzichtig, regels / Осторожно, правила"},
+{q:"Licht vs bord? / Светофор vs знак?",a:"Licht boven bord / Светофор важнее"},
+{q:"Defect licht? / Неработающий?",a:"Gelijkwaardig kruispunt / Равнозначный"},
+{q:"Rood knipperlicht spoorweg? / Мигающий ж/д?",a:"Stoppen! Trein! / Стоп! Поезд!"}
+],
+quiz:[
+{q:"Geel licht = ? / Жёлтый = ?",o:["Doorrijden / Ехать","Gas / Газ","Stoppen / Стоп","Claxon / Сигнал"],c:2},
+{q:"Knipperend geel? / Мигающий жёлтый?",o:["Stoppen / Стоп","Voorzichtig / Осторожно","Doorrijden / Ехать","Afslaan / Поворот"],c:1},
+{q:"Boven verkeerslicht? / Важнее светофора?",o:["Bord / Знак","Regel / Правило","Agent / Регулировщик","Niets / Ничего"],c:2},
+{q:"Defect licht? / Неработающий?",o:["Doorrijden / Ехать","Gelijkwaardig / Равнозначный","Stoppen / Стоп","Claxon / Сигнал"],c:1},
+{q:"Knipperend groen in NL? / Мигающий зелёный?",o:["Ja / Да","Nee / Нет","Fiets / Велосипед","Voetganger / Пешеход"],c:1}
+]},
+{id:"voorrang",tNL:"Voorrang",tRU:"Приоритет",icon:"⚠️",color:"#FFD700",
+theory:[
+{nl:"Gelijkwaardig kruispunt: verkeer van rechts heeft voorrang.",ru:"Равнозначный: приоритет справа."},
+{nl:"Voorrangsweg (geel ruit): verkeer op deze weg heeft voorrang.",ru:"Главная дорога (жёлтый ромб): приоритет."},
+{nl:"Prioriteit: 1) Agent 2) Lichten 3) Borden 4) Regels (rechts voor).",ru:"Приоритет: 1) Регулировщик 2) Светофоры 3) Знаки 4) Правила."},
+{nl:"Trams: bijna altijd voorrang, behalve bij verleen-voorrang of rood.",ru:"Трамваи: почти всегда, кроме «уступи» или красного."},
+{nl:"Verlaten uitrit: geen voorrang. Al het verkeer voor laten gaan.",ru:"Выезд с территории: нет приоритета. Всех пропустить."},
+{nl:"Hulpdiensten met zwaailicht + sirene: altijd voorrang.",ru:"Экстренные с маячком + сиреной: всегда приоритет."},
+{nl:"Bij afslaan: tegenliggers, fietsers en voetgangers voor laten gaan.",ru:"При повороте: встречных, велосипедистов и пешеходов пропустить."},
+{nl:"Rotonde met borden: op rotonde voorrang. Zonder: rechts gaat voor.",ru:"Кольцо со знаками: на кольце приоритет. Без: правый."},
+{nl:"T-kruispunt zonder borden: NIET automatisch doorgaand voorrang!",ru:"Т-перекрёсток без знаков: НЕ автоматический приоритет!"},
+{nl:"Militaire colonnes en begrafenisstoeten: niet doorsnijden.",ru:"Военные колонны и похоронные процессии: не прерывать."}
+],
+cards:[
+{q:"Gelijkwaardig kruispunt? / Равнозначный?",a:"Rechts heeft voorrang / Правый приоритет"},
+{q:"Prioriteitsvolgorde? / Порядок?",a:"Agent → lichten → borden → regels"},
+{q:"Trams altijd? / Трамваи всегда?",a:"Bijna, behalve verleen-voorrang/rood / Почти, кроме «уступи»/красного"},
+{q:"Uitrit? / Выезд?",a:"Geen voorrang / Нет приоритета"},
+{q:"Bij afslaan? / При повороте?",a:"Tegenliggers, fietsers, voetgangers / Встречных, велосипедистов, пешеходов"},
+{q:"Hulpdiensten zonder sirene? / Без сирены?",a:"Geen voorrang / Нет приоритета"},
+{q:"T-kruispunt zonder borden? / Т без знаков?",a:"Rechts gaat voor / Правый приоритет"}
+],
+quiz:[
+{q:"Gelijkwaardig kruispunt? / Равнозначный?",o:["Links / Слева","Rechts / Справа","Snelste / Быстрый","Niemand / Никто"],c:1},
+{q:"Boven verkeerslicht? / Важнее светофора?",o:["Bord / Знак","Regel / Правило","Agent / Регулировщик","Niets / Ничего"],c:2},
+{q:"Uitrit? / Выезд?",o:["Ja / Да","Nee / Нет","Overdag / Днём","Groen / Зелёный"],c:1},
+{q:"Rotonde met borden? / Кольцо со знаками?",o:["Oprijdend / Въезжающий","Op rotonde / На кольце","Vrachtwagen / Грузовой","Niemand / Никто"],c:1},
+{q:"Afslaan: fietsers? / Поворот: велосипедисты?",o:["Ja, voor / Да","Nee / Нет","Overdag / Днём","Fietspad / Дорожка"],c:0},
+{q:"T-kruispunt zonder borden? / Т без знаков?",o:["Doorgaand / Проезжий","Rechts voor / Правый","Alleen rechts / Направо","Soms / Иногда"],c:1},
+{q:"Hulpdiensten ZONDER sirene? / БЕЗ сирены?",o:["Voorrang / Приоритет","Geen / Нет","Snelweg / Магистраль","Nacht / Ночью"],c:1},
+{q:"Begrafenisstoet doorsnijden? / Прервать процессию?",o:["Ja / Да","Nee / Нет","Bij spoed / Срочно","Rotonde / Кольцо"],c:1}
+]},
+{id:"gevaarherkenning",tNL:"Gevaarherkenning",tRU:"Распознавание опасности",icon:"👁️",color:"#FF6B6B",
+theory:[
+{nl:"Gevaren vroeg herkennen en anticiperen.",ru:"Раннее распознавание и предвосхищение опасностей."},
+{nl:"Extra opletten bij scholen, speelplaatsen, woonwijken.",ru:"Внимание у школ, площадок, жилых кварталов."},
+{nl:"Slecht weer: snelheid aanpassen, meer afstand.",ru:"Плохая погода: снизить скорость, увеличить дистанцию."},
+{nl:"Volgafstand: min. 2 seconden. Nat: meer. IJs: 6 sec.",ru:"Дистанция: мин. 2 сек. Мокро: больше. Лёд: 6 сек."},
+{nl:"Dode hoek: niet zichtbaar in spiegels. Over schouder kijken!",ru:"Мёртвая зона: не видна в зеркалах. Через плечо!"},
+{nl:"Aquaplaning: niet remmen/sturen, gas loslaten.",ru:"Аквапланирование: не тормозить/рулить, отпустить газ."},
+{nl:"Stilstaande bus: passagiers kunnen oversteken.",ru:"Автобус на остановке: пассажиры переходят."},
+{nl:"Vermoeidheid = even gevaarlijk als alcohol. Pauze elke 2 uur.",ru:"Усталость = как алкоголь. Перерыв каждые 2 часа."},
+{nl:"Geparkeerde auto's: let op openende deuren!",ru:"Припаркованные: внимание на двери!"},
+{nl:"Bal op de weg = kind kan volgen! Direct remmen.",ru:"Мяч на дороге = ребёнок! Тормозить."},
+{nl:"IJzel: bruggen eerder glad! Afstand verdubbelen.",ru:"Гололёд: мосты раньше! Дистанция x2."},
+{nl:"Verblind: kijk naar rechter wegrand, niet in lampen.",ru:"Ослеплены: смотрите правый край, не в фары."},
+{nl:"Eerste regen na droogte: extra glad (olie + water).",ru:"Первый дождь после засухи: очень скользко (масло + вода)."}
+],
+cards:[
+{q:"Min. volgafstand? / Мин. дистанция?",a:"2 seconden / 2 секунды"},
+{q:"Dode hoek? / Мёртвая зона?",a:"Niet in spiegels, schouder kijken / Не в зеркалах, через плечо"},
+{q:"Aquaplaning? / Аквапланирование?",a:"Gas loslaten, niet remmen / Отпустить газ, не тормозить"},
+{q:"Pauze? / Перерыв?",a:"Elke 2 uur / Каждые 2 часа"},
+{q:"Bal op weg? / Мяч на дороге?",a:"Direct remmen, kind! / Тормозить, ребёнок!"},
+{q:"Waar eerder glad? / Где скользко?",a:"Bruggen / Мосты"},
+{q:"Verblind? / Ослеплены?",a:"Rechter wegrand / Правый край"}
+],
+quiz:[
+{q:"Min. volgafstand? / Мин. дистанция?",o:["1 sec","2 sec","5 sec","10 m"],c:1},
+{q:"Aquaplaning? / Аквапланирование?",o:["Hard remmen / Резко","Gas geven / Газ","Gas loslaten / Отпустить","Claxon / Сигнал"],c:2},
+{q:"Vermoeidheid vs alcohol? / Усталость?",o:["Niet gevaarlijk / Не опасна","Beetje / Немного","Even gevaarlijk / Одинаково","Minder / Менее"],c:2},
+{q:"Geparkeerde auto's? / Припаркованные?",o:["Niets / Ничего","Deuren / Двери","Kleur / Цвет","Merk / Марка"],c:1},
+{q:"Bal op weg? / Мяч?",o:["Doorrijden / Ехать","Claxon / Сигнал","Remmen / Тормозить","Inhalen / Обгон"],c:2},
+{q:"Eerder glad? / Раньше скользко?",o:["Tunnel / Туннель","Brug / Мост","Stad / Город","Rotonde / Кольцо"],c:1},
+{q:"Verblind? / Ослеплены?",o:["In lampen / В фары","Rechter wegrand / Правый край","Claxon / Сигнал","Stoppen / Стоп"],c:1},
+{q:"Eerste regen droogte? / Первый дождь?",o:["Veilig / Безопасно","Extra glad / Скользко","Normaal / Норма","Beter / Лучше"],c:1}
+]},
+{id:"inhalen",tNL:"Inhalen",tRU:"Обгон",icon:"🚗",color:"#4ECDC4",
+theory:[
+{nl:"In NL links inhalen. Rechts alleen bij files op snelweg.",ru:"В NL обгон слева. Справа — при пробке на магистрали."},
+{nl:"Vóór inhalen: spiegels, richting aangeven, dode hoek (schouder).",ru:"Перед обгоном: зеркала, поворотник, мёртвая зона."},
+{nl:"Niet inhalen bij doorgetrokken streep.",ru:"Нельзя при сплошной."},
+{nl:"Inhalen bij zebrapad, kruispunt, spoorweg: verboden.",ru:"Обгон у зебры, перекрёстка, ж/д: запрещено."},
+{nl:"Na inhalen: voldoende afstand voor terugkeer.",ru:"После: достаточная дистанция перед возвратом."},
+{nl:"Niet inhalen als tegenliggers in gevaar.",ru:"Нельзя, если встречным опасно."},
+{nl:"Rechts inhalen mag bij: files snelweg, verschillende bestemmingsstroken, tram links.",ru:"Справа можно: пробки, разные полосы, трамвай слева."}
+],
+cards:[
+{q:"Welke kant? / С какой стороны?",a:"Links / Слева"},
+{q:"Vóór inhalen? / Перед обгоном?",a:"Spiegels, richting, dode hoek / Зеркала, поворотник, мёртвая зона"},
+{q:"Doorgetrokken streep? / Сплошная?",a:"Nee / Нет"},
+{q:"Wanneer rechts? / Когда справа?",a:"Files snelweg / Пробка на магистрали"},
+{q:"Bij zebrapad? / У зебры?",a:"Verboden / Запрещено"}
+],
+quiz:[
+{q:"Kant inhalen? / Сторона обгона?",o:["Rechts / Справа","Links / Слева","Beide / Обе","Maakt niet uit / Не важно"],c:1},
+{q:"Wanneer rechts? / Когда справа?",o:["Altijd / Всегда","Nooit / Никогда","Files snelweg / Пробка","Landwegen / Загород"],c:2},
+{q:"Bij spoorweg? / У ж/д?",o:["Ja / Да","Nee / Нет","Overdag / Днём","Groen / Зелёный"],c:1},
+{q:"Doorgetrokken streep? / Сплошная?",o:["Ja / Да","Nee / Нет","Soms / Иногда","Links / Слева"],c:1},
+{q:"Na inhalen? / После обгона?",o:["Direct terug / Сразу","Afstand / Дистанция","Remmen / Тормоз","Claxon / Сигнал"],c:1}
+]},
+{id:"rotonde",tNL:"Rotonde",tRU:"Круговое движение",icon:"🔄",color:"#9B59B6",
+theory:[
+{nl:"Tegen de klok in (naar rechts).",ru:"Против часовой стрелки (направо)."},
+{nl:"Met borden: verkeer op rotonde heeft voorrang.",ru:"Со знаками: на кольце приоритет."},
+{nl:"Zonder borden: rechts gaat voor (oprijdend voorrang).",ru:"Без знаков: правый приоритет (въезжающий)."},
+{nl:"Richting aangeven (rechts) bij verlaten rotonde.",ru:"Правый поворотник при съезде."},
+{nl:"Let op fietsers rond de rotonde!",ru:"Внимание велосипедистам!"},
+{nl:"Turborotonde: vooraf juiste strook kiezen. Niet wisselen!",ru:"Турбо-кольцо: заранее полосу. Не менять!"},
+{nl:"Bij verlaten: fietsers op kruisend fietspad hebben vaak voorrang.",ru:"При съезде: велосипедисты часто имеют приоритет."}
+],
+cards:[
+{q:"Richting? / Направление?",a:"Tegen klok in / Против часовой"},
+{q:"Met borden — voorrang? / Со знаками?",a:"Op rotonde / На кольце"},
+{q:"Zonder borden? / Без знаков?",a:"Rechts gaat voor / Правый приоритет"},
+{q:"Richting aangeven? / Поворотник?",a:"Bij verlaten (rechts) / При съезде (правый)"},
+{q:"Turborotonde? / Турбо?",a:"Niet van strook wisselen / Не менять полосу"}
+],
+quiz:[
+{q:"Richting? / Направление?",o:["Met klok / По часовой","Tegen klok / Против","Maakt niet uit / Не важно","Recht / Прямо"],c:1},
+{q:"MET borden? / СО знаками?",o:["Oprijdend / Въезжающий","Op rotonde / На кольце","Vrachtwagen / Грузовой","Fietser / Велосипедист"],c:1},
+{q:"ZONDER borden? / БЕЗ знаков?",o:["Op rotonde / На кольце","Oprijdend / Въезжающий","Niemand / Никто","Fietser / Велосипедист"],c:1},
+{q:"Turborotonde: strook wisselen? / Менять полосу?",o:["Ja / Да","Nee / Нет","Soms / Иногда","Rechts / Направо"],c:1},
+{q:"Richting aangeven? / Поворотник?",o:["Oprijden / Въезд","Verlaten / Съезд","Altijd links / Лево","Nooit / Никогда"],c:1}
+]},
+{id:"snelweg",tNL:"Snelweg en autoweg",tRU:"Автомагистраль",icon:"🛣️",color:"#3498DB",
+theory:[
+{nl:"Minimumsnelheid snelweg: 60 km/u. Autoweg: 50 km/u.",ru:"Мин. скорость магистрали: 60 км/ч. Автодороги: 50 км/ч."},
+{nl:"Invoegstrook: op snelheid komen. Verkeer op snelweg hoeft niet in te schikken.",ru:"Разгонная полоса: набрать скорость. Магистраль не обязана уступать."},
+{nl:"Vluchtstrook: alleen noodgevallen. Verboden rijden/stoppen zonder nood.",ru:"Аварийная полоса: только ЧС."},
+{nl:"Ritsen (om en om invoegen): verplicht.",ru:"Поочерёдное вливание (ritsen): обязательно."},
+{nl:"Matrixborden: actuele info (snelheid, afsluitingen, file).",ru:"Матричные табло: актуальная информация."},
+{nl:"Pech: vluchtstrook, gevarendriehoek, hesje, achter vangrail.",ru:"Поломка: аварийная полоса, знак, жилет, за отбойник."},
+{nl:"Spookrijder: rechts stoppen, motor uit, achter vangrail.",ru:"Встречный: стоп справа, мотор выкл., за отбойник."},
+{nl:"Snelweg = groen bord, gescheiden rijbanen. Autoweg = blauw bord.",ru:"Магистраль = зелёный, разделённые полосы. Автодорога = синий."}
+],
+cards:[
+{q:"Min. snelweg? / Мин. магистраль?",a:"60 km/u / 60 км/ч"},
+{q:"Vluchtstrook? / Аварийная?",a:"Alleen nood / Только ЧС"},
+{q:"Pech? / Поломка?",a:"Vluchtstrook, driehoek, hesje, vangrail / Полоса, знак, жилет, отбойник"},
+{q:"Ritsen? / Ritsen?",a:"Om en om invoegen / Поочерёдное вливание"},
+{q:"Spookrijder? / Встречный?",a:"Rechts stoppen, motor uit / Стоп справа, мотор выкл."},
+{q:"Min. autoweg? / Мин. автодорога?",a:"50 km/u / 50 км/ч"}
+],
+quiz:[
+{q:"Min. snelweg? / Мин. магистраль?",o:["30 km/u","50 km/u","60 km/u","80 km/u"],c:2},
+{q:"Vluchtstrook? / Аварийная?",o:["Inhalen / Обгон","Nood / ЧС","Langzaam / Медленные","Parkeren / Парковка"],c:1},
+{q:"Hesje bij pech? / Жилет?",o:["Ja / Да","Nee / Нет","Nacht / Ночью","Regen / Дождь"],c:0},
+{q:"Ritsen verplicht? / Обязательно?",o:["Ja / Да","Nee / Нет","Alleen file / Пробка","Snelweg / Магистраль"],c:0},
+{q:"Spookrijder? / Встречный?",o:["Doorrijden / Ехать","Claxon / Сигнал","Rechts stoppen / Стоп справа","Keren / Разворот"],c:2},
+{q:"Min. autoweg? / Мин. автодорога?",o:["30 km/u","50 km/u","60 km/u","80 km/u"],c:1}
+]},
+{id:"fietsers",tNL:"Fietsers en bromfietsers",tRU:"Велосипедисты и мопеды",icon:"🚴",color:"#2ECC71",
+theory:[
+{nl:"Fietsers en voetgangers = kwetsbare verkeersdeelnemers.",ru:"Велосипедисты и пешеходы = уязвимые."},
+{nl:"Fietspad (rond blauw, fiets): verplicht. Fiets/bromfietspad: blauw, fiets + bromfiets.",ru:"Велодорожка (синий круг, велосипед): обязательная. Вело-/мопедная: велосипед + мопед."},
+{nl:"Bromfiets (geel kenteken): max 45 km/u op rijbaan. Snorfiets (blauw): max 25 op fietspad.",ru:"Мопед (жёлтый номер): макс. 45 на проезжей части. Скутер (синий): макс. 25 на велодорожке."},
+{nl:"Bij afslaan: altijd controleren op fietsers! Dode hoek!",ru:"При повороте: проверять велосипедистов! Мёртвая зона!"},
+{nl:"Kinderen op fiets: onvoorspelbaar. Extra ruimte!",ru:"Дети на велосипедах: непредсказуемы. Больше места!"},
+{nl:"Fietsers naast elkaar: max 2. Bij vernauwing: achter elkaar.",ru:"Велосипедисты рядом: макс. 2. Сужение: друг за другом."},
+{nl:"Groepen fietsers/voetgangers: niet doorsnijden.",ru:"Группы велосипедистов/пешеходов: не разделять."},
+{nl:"Voetgangers: trottoir. Geen trottoir: rechts lopen.",ru:"Пешеходы: тротуар. Нет тротуара: справа."}
+],
+cards:[
+{q:"Max bromfiets? / Макс. мопед?",a:"45 km/u rijbaan / 45 км/ч проезжая"},
+{q:"Max snorfiets? / Макс. скутер?",a:"25 km/u fietspad / 25 км/ч велодорожка"},
+{q:"Geel vs blauw kenteken? / Жёлтый vs синий?",a:"Geel = bromfiets, blauw = snorfiets / Жёлтый = мопед, синий = скутер"},
+{q:"Fietsers naast elkaar? / Рядом?",a:"Max 2 / Макс. 2"},
+{q:"Groep fietsers? / Группа?",a:"Niet doorsnijden / Не разделять"}
+],
+quiz:[
+{q:"Max bromfiets? / Мопед?",o:["25 km/u","30 km/u","45 km/u","50 km/u"],c:2},
+{q:"Snorfiets rijdt op? / Скутер где?",o:["Rijbaan / Проезжая","Fietspad / Велодорожка","Trottoir / Тротуар","Snelweg / Магистраль"],c:1},
+{q:"Fietsers naast elkaar? / Рядом?",o:["Verboden / Запрещено","Max 2 / Макс. 2","Max 3 / Макс. 3","Onbeperkt / Без лимита"],c:1},
+{q:"Geel kenteken = ? / Жёлтый номер = ?",o:["Auto / Авто","Bromfiets / Мопед","Snorfiets / Скутер","Fiets / Велосипед"],c:1},
+{q:"Groep doorsnijden? / Разделить группу?",o:["Ja / Да","Nee / Нет","Overdag / Днём","Inhalen / Обгон"],c:1}
+]},
+{id:"parkeren",tNL:"Parkeren en stilstaan",tRU:"Парковка и остановка",icon:"🅿️",color:"#1ABC9C",
+theory:[
+{nl:"Stilstaan = kort (in/uit, laden). Parkeren = >3 min zonder laden.",ru:"Остановка = кратко. Парковка = >3 мин без погрузки."},
+{nl:"Verboden: kruispunt, fietspad, bushalte, stoep, zebrapad.",ru:"Запрещена: перекрёсток, велодорожка, остановка, тротуар, зебра."},
+{nl:"Parkeerverbod (schuine streep): kort stilstaan mag. Stopverbod (kruis): niets.",ru:"Запрет парковки (полоса): кратко можно. Запрет остановки (крест): нет."},
+{nl:"Blauwe zone: parkeerschijf verplicht.",ru:"Синяя зона: парковочные часы."},
+{nl:"Hollandse methode: deur met rechterhand (zo kijk je achterom).",ru:"Голландский метод: дверь правой рукой (так смотрите назад)."},
+{nl:"5 meter vóór/na kruispunt niet parkeren.",ru:"5 м до/после перекрёстка не парковаться."},
+{nl:"Gehandicaptenparkeerplaats: alleen met geldige kaart.",ru:"Инвалидная парковка: только с картой."}
+],
+cards:[
+{q:"Parkeren vs stilstaan? / Разница?",a:"Parkeren >3 min. Stilstaan = kort / Парковка >3 мин. Остановка = кратко"},
+{q:"Waar verboden? / Где запрещено?",a:"Kruispunt, fietspad, bushalte, stoep, zebrapad"},
+{q:"Hollandse methode? / Голландский метод?",a:"Deur rechterhand / Дверь правой рукой"},
+{q:"Parkeerverbod vs stopverbod? / Разница?",a:"Parkeer: kort mag. Stop: niets / Парковка: кратко. Остановка: нет"}
+],
+quiz:[
+{q:"Parkeren = ? / Парковка?",o:["< 1 min","> 3 min","Op parkeerplaats / Паркинг","Nacht / Ночью"],c:1},
+{q:"Op fietspad? / На велодорожке?",o:["Ja / Да","Nee / Нет","Kort / Коротко","Nacht / Ночью"],c:1},
+{q:"Bord met kruis? / Знак с крестом?",o:["Parkeerverbod / Парковка","Stopverbod / Остановка","Eenrichting / Однострон.","Voorrang / Приоритет"],c:1},
+{q:"Hollandse methode? / Голландский?",o:["Linkerhand / Левой","Rechterhand / Правой","Voet / Ногой","Beide / Обеими"],c:1},
+{q:"Blauwe zone? / Синяя зона?",o:["Gratis / Бесплатно","Parkeerschijf / Часы","Verboden / Запрещено","Betaald / Платно"],c:1}
+]},
+{id:"verlichting",tNL:"Verlichting",tRU:"Освещение",icon:"💡",color:"#F39C12",
+theory:[
+{nl:"Dimlicht verplicht: slecht zicht, nacht, tunnels.",ru:"Ближний обязателен: плохая видимость, ночь, туннели."},
+{nl:"Groot licht: buiten bebouwde kom, niemand verblinden.",ru:"Дальний: за городом, если не слепите."},
+{nl:"Mistlicht achter: alleen bij zicht < 50 m. Uitzetten bij verbetering!",ru:"Задний туманный: только < 50 м. Выключить при улучшении!"},
+{nl:"Mistlicht voor: bij zicht < 200 m.",ru:"Передний туманный: < 200 м."},
+{nl:"Stadslicht alleen: nooit voldoende.",ru:"Только габариты: никогда не достаточно."},
+{nl:"Overdag dimlicht/DRL: aanbevolen.",ru:"Днём ближний/ДХО: рекомендуется."},
+{nl:"Richtingaanwijzers: afslaan, invoegen, wegrijden, stoppen.",ru:"Поворотники: поворот, вливание, старт, остановка."},
+{nl:"Alarmlichten (4 richtingaanwijzers): nood, gevaar.",ru:"Аварийка: ЧС, опасность."}
+],
+cards:[
+{q:"Dimlicht wanneer? / Ближний когда?",a:"Slecht zicht, nacht, tunnels / Плохая видимость, ночь, туннели"},
+{q:"Mistlicht achter? / Задний туманный?",a:"Zicht < 50 m / Видимость < 50 м"},
+{q:"Stadslicht rijden? / Габариты?",a:"Nooit voldoende / Никогда не достаточно"},
+{q:"Groot licht waar? / Дальний где?",a:"Buiten bebouwde kom / За городом"},
+{q:"Alarmlichten? / Аварийка?",a:"Nood of gevaar / ЧС или опасность"}
+],
+quiz:[
+{q:"Mistlicht achter? / Задний?",o:["Altijd / Всегда","Regen / Дождь","Zicht <50m / <50м","Nacht / Ночью"],c:2},
+{q:"Dimlicht overdag? / Ближний днём?",o:["Verplicht / Обязательно","Aanbevolen / Рекомендован","Snelweg / Магистраль","Winter / Зима"],c:1},
+{q:"Dimlicht altijd in? / Ближний всегда в?",o:["Overal / Везде","Tunnel / Туннель","Landweg / Загород","Stad / Город"],c:1},
+{q:"Groot licht in stad? / Дальний в городе?",o:["Ja / Да","Nee / Нет","Nacht / Ночью","Soms / Иногда"],c:1},
+{q:"Mistlicht voor bij? / Передний при?",o:["<50 m","<100 m","<200 m","<500 m"],c:2}
+]},
+{id:"alcohol",tNL:"Alcohol, drugs en medicijnen",tRU:"Алкоголь и наркотики",icon:"🚫",color:"#E74C3C",
+theory:[
+{nl:"Ervaren bestuurders: max 0,5‰. Beginners (5 jaar): max 0,2‰.",ru:"Опытные: макс. 0,5‰. Начинающие (5 лет): макс. 0,2‰."},
+{nl:"Drugs: altijd verboden achter stuur.",ru:"Наркотики: всегда запрещены за рулём."},
+{nl:"Alcohol vertraagt reactie, vermindert concentratie, vals gevoel.",ru:"Алкоголь: замедляет реакцию, снижает концентрацию, ложная уверенность."},
+{nl:"Medicijnen: let op gele driehoek sticker.",ru:"Лекарства: жёлтый треугольник-наклейка."},
+{nl:"Blaastest: verplicht meewerken.",ru:"Алкотест: обязаны пройти."},
+{nl:"Alcohol + medicijnen: extra gevaarlijk.",ru:"Алкоголь + лекарства: очень опасно."},
+{nl:"Tunnelvisie door alcohol: gezichtsveld wordt kleiner.",ru:"Туннельное зрение от алкоголя."},
+{nl:"Afbreken: ±1 glas/uur. Koffie/koude lucht helpen NIET.",ru:"Расщепление: ±1 бокал/час. Кофе/холод НЕ помогают."}
+],
+cards:[
+{q:"Limiet ervaren? / Опытные?",a:"0,5‰"},
+{q:"Limiet beginners? / Начинающие?",a:"0,2‰ (5 jaar / лет)"},
+{q:"Blaastest? / Алкотест?",a:"Verplicht / Обязателен"},
+{q:"Medicijnen sticker? / Наклейка?",a:"Gele driehoek / Жёлтый треугольник"},
+{q:"Helpt koffie? / Помогает кофе?",a:"Nee / Нет"}
+],
+quiz:[
+{q:"Limiet beginners? / Начинающие?",o:["0,0‰","0,2‰","0,5‰","0,8‰"],c:1},
+{q:"Hoelang beginnerslimiet? / Срок?",o:["1 jaar","3 jaar","5 jaar","10 jaar"],c:2},
+{q:"Drugs? / Наркотики?",o:["Ja / Да","Nee, nooit / Нет","Softdrugs / Лёгкие","24u later / Через 24ч"],c:1},
+{q:"Alcohol + reactie? / Алкоголь + реакция?",o:["Versnelt / Ускоряет","Vertraagt / Замедляет","Geen effect / Нет","Verbetert / Улучшает"],c:1},
+{q:"Koffie helpt? / Кофе?",o:["Ja / Да","Nee / Нет","Beetje / Немного","'s Ochtends / Утром"],c:1},
+{q:"Tunnelvisie door? / Туннельное зрение?",o:["Vermoeidheid / Усталость","Alcohol / Алкоголь","Regen / Дождь","Mist / Туман"],c:1}
+]},
+{id:"tunnel",tNL:"Tunnels",tRU:"Туннели",icon:"🚇",color:"#34495E",
+theory:[
+{nl:"Dimlicht verplicht, ook overdag.",ru:"Ближний обязателен, даже днём."},
+{nl:"Calamiteit: motor uit, sleutels laten, naar nooduitgang.",ru:"ЧС: мотор выкл., ключи оставить, к аварийному выходу."},
+{nl:"Noodtelefoon gebruiken, niet mobiel.",ru:"Аварийный телефон, не мобильный."},
+{nl:"Min. 2 sec afstand.",ru:"Мин. 2 сек дистанция."},
+{nl:"File in tunnel: afstand houden, motor NIET uitzetten.",ru:"Пробка: дистанция, мотор НЕ выключать."},
+{nl:"Niet keren of achteruitrijden in tunnel!",ru:"Не разворачиваться и не задом!"},
+{nl:"Gevaarlijke stoffen: sommige niet door tunnel.",ru:"Опасные вещества: некоторые нельзя."}
+],
+cards:[
+{q:"Dimlicht tunnel? / Ближний туннель?",a:"Altijd verplicht / Всегда обязателен"},
+{q:"Calamiteit? / ЧС?",a:"Motor uit, sleutels, nooduitgang / Мотор выкл., ключи, выход"},
+{q:"Telefoon? / Телефон?",a:"Noodtelefoon / Аварийный"},
+{q:"File: motor? / Пробка: мотор?",a:"Laten draaien / Оставить работать"},
+{q:"Keren in tunnel? / Разворот в туннеле?",a:"Verboden / Запрещено"}
+],
+quiz:[
+{q:"Dimlicht tunnel? / Ближний туннель?",o:["Ja, altijd / Да","Nee / Нет","Nacht / Ночью","Mist / Туман"],c:0},
+{q:"Brand? / Пожар?",o:["Doorrijden / Ехать","Motor uit, nooduitgang / Выход","Wachten / Ждать","Achteruit / Назад"],c:1},
+{q:"Sleutels evacuatie? / Ключи?",o:["Meenemen / Забрать","Laten / Оставить","Kofferbak / Багажник","Maakt niet uit / Не важно"],c:1},
+{q:"File: motor? / Пробка: мотор?",o:["Uit / Выкл.","Aan / Вкл.","Maakt niet uit / Не важно","Diesel / Дизель"],c:1},
+{q:"Keren? / Разворот?",o:["Ja / Да","Nee / Нет","Bij calamiteit / ЧС","Kort / Коротко"],c:1}
+]},
+{id:"eersteHulp",tNL:"Pech en eerste hulp",tRU:"Поломка и первая помощь",icon:"🆘",color:"#E67E22",
+theory:[
+{nl:"Ongeval: beveilig (driehoek), controleer gewonden, bel 112.",ru:"ДТП: обезопасить (знак), проверить пострадавших, 112."},
+{nl:"Gevarendriehoek: min. 30 m achter auto (snelweg: verder).",ru:"Знак: мин. 30 м (магистраль: дальше)."},
+{nl:"Veiligheidshesje verplicht bij pech op snelweg.",ru:"Жилет обязателен на магистрали."},
+{nl:"Aanrijding: altijd gegevens uitwisselen. Letsel: politie.",ru:"Столкновение: обмен данными. Травмы: полиция."},
+{nl:"Europees schadeformulier voor verzekering.",ru:"Европейский протокол для страховки."},
+{nl:"Bewusteloze: stabiele zijligging, luchtweg vrij.",ru:"Без сознания: устойчивое боковое положение."},
+{nl:"Ernstige bloeding: druk op wond, 112.",ru:"Кровотечение: давление на рану, 112."},
+{nl:"Gewonde NIET verplaatsen, tenzij direct gevaar.",ru:"Пострадавшего НЕ перемещать, кроме опасности."}
+],
+cards:[
+{q:"Alarmnummer? / Номер?",a:"112"},
+{q:"Gevarendriehoek? / Знак?",a:"Min. 30 m / Мин. 30 м"},
+{q:"Bewusteloze? / Без сознания?",a:"Stabiele zijligging / Боковое положение"},
+{q:"Gewonde verplaatsen? / Перемещать?",a:"Nee, tenzij gevaar / Нет, кроме опасности"},
+{q:"Schadeformulier? / Протокол?",a:"Europees formulier / Европейский"}
+],
+quiz:[
+{q:"Alarmnummer? / Номер?",o:["110","112","911","144"],c:1},
+{q:"Driehoek afstand? / Знак?",o:["10 m","30 m","100 m","5 m"],c:1},
+{q:"Gegevens uitwisselen? / Обмен?",o:["Ja, altijd / Да","Nee / Нет","Alleen schade / Ущерб","Alleen politie / Полиция"],c:0},
+{q:"Bewusteloze? / Без сознания?",o:["Schudden / Трясти","Water / Вода","Zijligging / Боковое","Zitten / Сидеть"],c:2},
+{q:"Verplaatsen? / Перемещать?",o:["Ja / Да","Nee, tenzij gevaar / Нет","Altijd / Всегда","Arts / Врач"],c:1}
+]},
+{id:"milieu",tNL:"Milieu en voertuig",tRU:"Экология и автомобиль",icon:"🌿",color:"#27AE60",
+theory:[
+{nl:"Het Nieuwe Rijden: snel opschakelen, anticiperen, bandenspanning.",ru:"«Новое вождение»: быстро переключать, предвосхищать, давление шин."},
+{nl:"Min. profieldiepte: 1,6 mm. Winter: 4 mm aanbevolen.",ru:"Мин. протектор: 1,6 мм. Зима: 4 мм рекомендуется."},
+{nl:"APK: verplichte keuring. Nieuw: na 4 jaar, daarna jaarlijks.",ru:"APK: обязательный техосмотр. Новые: через 4 года, далее ежегодно."},
+{nl:"Remweg = reactieafstand + remafstand. Snelheid x2 = remweg x4!",ru:"Тормозной путь = реакция + торможение. Скорость x2 = путь x4!"},
+{nl:"ABS: niet blokkeren. ESP: stabiliteit bij slippen.",ru:"ABS: не блокирует. ESP: стабильность при заносе."},
+{nl:"Lage bandenspanning: meer brandstof, slechter sturen.",ru:"Низкое давление: больше расход, хуже руль."},
+{nl:"Motor uit bij lang wachten (>30 sec).",ru:"Мотор выкл. при ожидании >30 сек."},
+{nl:"Milieuzones: oudere voertuigen niet toegestaan.",ru:"Экозоны: старые авто не допускаются."},
+{nl:"Controleer: olie, koelvloeistof, banden, ruitensproei, licht.",ru:"Проверяйте: масло, охладитель, шины, омыватель, свет."}
+],
+cards:[
+{q:"Min. profieldiepte? / Мин. протектор?",a:"1,6 mm / 1,6 мм"},
+{q:"APK? / APK?",a:"Verplichte keuring / Техосмотр"},
+{q:"ABS? / ABS?",a:"Wielen niet blokkeren / Не блокирует"},
+{q:"Remweg? / Тормозной путь?",a:"Reactie + rem / Реакция + торможение"},
+{q:"Lage bandenspanning? / Низкое давление?",a:"Meer brandstof, slechter sturen / Больше расход, хуже руль"},
+{q:"Eerste APK? / Первый APK?",a:"Na 4 jaar / Через 4 года"}
+],
+quiz:[
+{q:"Min. profieldiepte? / Протектор?",o:["0,5 mm","1,0 mm","1,6 mm","3,0 mm"],c:2},
+{q:"APK = ? / APK = ?",o:["Verzekering / Страховка","Keuring / Техосмотр","Examen / Экзамен","Belasting / Налог"],c:1},
+{q:"ABS? / ABS?",o:["Harder / Сильнее","Blokkeren / Блокировать","Niet blokkeren / Не блокир.","Sneller / Быстрее"],c:2},
+{q:"Remweg? / Тормозной путь?",o:["Alleen rem / Только торм.","Reactie+rem / Реакция+торм.","Snelheid×2","Afstand / Дистанция"],c:1},
+{q:"Eerste APK? / Первый APK?",o:["2 jaar","3 jaar","4 jaar","5 jaar"],c:2},
+{q:"Motor uit wachten? / Мотор выкл.?",o:["10 sec","30 sec","1 min","5 min"],c:1},
+{q:"Lage banden = ? / Низкое давление?",o:["Minder / Меньше расход","Meer brandstof / Больше","Geen effect / Нет","Beter / Лучше"],c:1}
+]},
+{id:"documenten",tNL:"Rijbewijs en documenten",tRU:"Права и документы",icon:"📄",color:"#8E44AD",
+theory:[
+{nl:"Altijd bij je: rijbewijs, kentekenbewijs, verzekeringsbewijs.",ru:"Всегда при себе: права, регистрация, страховка."},
+{nl:"Rijbewijs B: auto tot 3.500 kg. Aanhanger met beperkingen.",ru:"Категория B: авто до 3500 кг. Прицеп с ограничениями."},
+{nl:"Geldig 10 jaar (15 als vóór 2014). Vernieuwen.",ru:"10 лет (15 если до 2014). Продлить."},
+{nl:"Min. verzekering: WA (Wettelijke Aansprakelijkheid).",ru:"Мин. страховка: WA (гражданская ответственность)."},
+{nl:"Zonder rijbewijs/verzekering = strafbaar.",ru:"Без прав/страховки = наказуемо."},
+{nl:"CBR 2025: 50 vragen, 30 min, 44 goed = geslaagd. Tolk: 45 min.",ru:"CBR 2025: 50 вопросов, 30 мин, 44 правильно = сдан. Переводчик: 45 мин."},
+{nl:"Rijbewijs B automaat: ALLEEN automaat. Handgeschakeld: apart examen.",ru:"Права автомат: ТОЛЬКО автомат. Механика: отдельный экзамен."},
+{nl:"Motorrijtuigenbelasting (wegenbelasting): verplicht.",ru:"Дорожный налог: обязательный."}
+],
+cards:[
+{q:"Documenten? / Документы?",a:"Rijbewijs, kenteken, verzekering / Права, регистрация, страховка"},
+{q:"Geldigheid? / Срок?",a:"10 jaar / 10 лет"},
+{q:"WA? / WA?",a:"Min. verzekering / Мин. страховка"},
+{q:"CBR? / CBR?",a:"50 vragen, 44 goed, 30 min / 50 вопросов, 44 правильно, 30 мин"},
+{q:"Automaat = handgeschakeld? / Автомат = механика?",a:"Nee, alleen automaat / Нет, только автомат"}
+],
+quiz:[
+{q:"Geldigheid rijbewijs? / Срок?",o:["5 jaar","10 jaar","Onbeperkt / Бессрочно","20 jaar"],c:1},
+{q:"CBR vragen? / Вопросы?",o:["25","40","50","65"],c:2},
+{q:"CBR goed? / Правильно?",o:["40","42","44","48"],c:2},
+{q:"Min. verzekering? / Мин. страховка?",o:["Casco / Каско","WA / Гражд.","Allrisk / Все","Geen / Нет"],c:1},
+{q:"Automaat → handgeschakeld? / Авт. → мех.?",o:["Ja / Да","Nee / Нет","Na 1 jaar / Через год","Begeleider / Инструктор"],c:1},
+{q:"CBR met tolk? / С переводчиком?",o:["30 min","45 min","60 min","90 min"],c:1}
+]},
+{id:"afstanden",tNL:"Afstanden en snelheid",tRU:"Дистанции и скорость",icon:"📏",color:"#E056A0",
+theory:[
+{nl:"Reactietijd: ±1 seconde. Bij 50 km/u ≈ 14 m reactieafstand.",ru:"Время реакции: ±1 сек. При 50 км/ч ≈ 14 м."},
+{nl:"Remafstand groeit kwadratisch: snelheid x2 = remafstand x4!",ru:"Тормозной путь квадратично: скорость x2 = путь x4!"},
+{nl:"Stopafstand 50 km/u ≈ 28 m (droog). 100 km/u ≈ 70 m.",ru:"Полный путь 50 км/ч ≈ 28 м. 100 км/ч ≈ 70 м."},
+{nl:"Nat wegdek: remafstand tot 2x langer!",ru:"Мокрая дорога: торможение до 2x!"},
+{nl:"2-secondenregel. Regen: 3 sec. IJs: 6 sec.",ru:"Правило 2 секунд. Дождь: 3. Лёд: 6."},
+{nl:"Reactieafstand (m) ≈ snelheid (km/u) ÷ 3,6.",ru:"Путь реакции (м) ≈ скорость (км/ч) ÷ 3,6."}
+],
+cards:[
+{q:"Reactietijd? / Реакция?",a:"±1 seconde / ±1 секунда"},
+{q:"Volgafstand droog? / Дистанция (сухо)?",a:"2 seconden / 2 секунды"},
+{q:"Volgafstand regen? / Дистанция (дождь)?",a:"3 seconden / 3 секунды"},
+{q:"Snelheid x2 = remweg? / Скорость x2?",a:"x4"},
+{q:"Stopafstand 100 km/u? / Путь при 100?",a:"±70 m / ±70 м"},
+{q:"Volgafstand ijs? / Дистанция (лёд)?",a:"6 seconden / 6 секунд"}
+],
+quiz:[
+{q:"Reactietijd? / Реакция?",o:["0,5 sec","1 sec","2 sec","3 sec"],c:1},
+{q:"Snelheid x2 = remweg? / x2 = путь?",o:["x2","x3","x4","x8"],c:2},
+{q:"Volgafstand regen? / Дистанция дождь?",o:["1 sec","2 sec","3 sec","5 sec"],c:2},
+{q:"Volgafstand ijs? / Лёд?",o:["2 sec","4 sec","6 sec","10 sec"],c:2},
+{q:"Nat wegdek remweg? / Мокрая дорога?",o:["Korter / Короче","Gelijk / Равно","Tot 2x / До 2x","Tot 4x / До 4x"],c:2},
+{q:"Stopafstand 50 km/u? / Путь 50?",o:["10 m","28 m","50 m","70 m"],c:1}
+]},
+{id:"spoorweg",tNL:"Spoorwegovergang",tRU:"Железнодорожный переезд",icon:"🚂",color:"#C0392B",
+theory:[
+{nl:"Andreaskruis: spoorwegovergang nadert.",ru:"Андреевский крест: приближение к переезду."},
+{nl:"Knipperlichten + bel: trein komt! ALTIJD stoppen.",ru:"Мигающие + звонок: поезд! ВСЕГДА стоп."},
+{nl:"Slagbomen dicht: NOOIT passeren.",ru:"Шлагбаумы: НИКОГДА не проезжать."},
+{nl:"Onbewaakte overgang: kijken, luisteren, langzaam.",ru:"Нерегулируемый: смотреть, слушать, медленно."},
+{nl:"Niet stilstaan op de overgang!",ru:"Не стоять на переезде!"},
+{nl:"Vastzitten: slagboom desnoods doorbreken!",ru:"Застрял: шлагбаум при необходимости сломать!"}
+],
+cards:[
+{q:"Andreaskruis? / Андреевский крест?",a:"Spoorwegovergang / Ж/д переезд"},
+{q:"Knipperlichten + bel? / Мигающие + звонок?",a:"Stoppen! Trein! / Стоп! Поезд!"},
+{q:"Slagboom dicht? / Шлагбаум?",a:"Nooit passeren / Никогда"},
+{q:"Vastzitten? / Застрял?",a:"Slagboom doorbreken! / Сломать!"}
+],
+quiz:[
+{q:"Knipperlichten spoorweg? / Мигающие ж/д?",o:["Voorzichtig / Осторожно","Stoppen / Стоп","Langzaam / Медленно","Doorrijden / Ехать"],c:1},
+{q:"Slagboom dicht? / Шлагбаум?",o:["Ja, passeren / Да","Nee, nooit / Нет","Bij haast / Спешка","Veilig / Безопасно"],c:1},
+{q:"Vastzitten? / Застрял?",o:["Wachten / Ждать","Achteruit / Назад","Doorbreken / Сломать","112"],c:2},
+{q:"Stilstaan op overgang? / Стоять?",o:["Ja / Да","Nee / Нет","Kort / Коротко","File / Пробка"],c:1}
+]},
+{id:"laden",tNL:"Laden en aanhanger",tRU:"Погрузка и прицеп",icon:"🚛",color:"#795548",
+theory:[
+{nl:"Lading max 1 m achter uitsteken. >1 m: rood/wit markering.",ru:"Груз макс. 1 м сзади. >1 м: красно-белая маркировка."},
+{nl:"Lading niet breder dan voertuig.",ru:"Груз не шире ТС."},
+{nl:"Rijbewijs B: auto 3.500 kg. Aanhanger max 750 kg of totaal 3.500.",ru:"B: авто 3500. Прицеп макс. 750 или всего 3500."},
+{nl:"Slepen: max 25 km/u met kabel/stang. Alarmlichten aan.",ru:"Буксировка: макс. 25 км/ч. Аварийка."},
+{nl:"Dakdragers verhogen brandstofverbruik. Verwijderen als niet nodig.",ru:"Багажник на крыше: больше расход. Снять если не нужен."},
+{nl:"Lading goed vastzetten!",ru:"Груз хорошо закрепить!"}
+],
+cards:[
+{q:"Lading achter? / Груз сзади?",a:"Max 1 m / Макс. 1 м"},
+{q:"Rijbewijs B + aanhanger? / B + прицеп?",a:"Max 750 kg of totaal 3.500 / Макс. 750 или 3500"},
+{q:"Slepen snelheid? / Буксировка?",a:"Max 25 km/u / Макс. 25 км/ч"},
+{q:"Lading breder? / Груз шире?",a:"Niet toegestaan / Не разрешено"}
+],
+quiz:[
+{q:"Lading achter max? / Груз сзади?",o:["0,5 m","1 m","2 m","3 m"],c:1},
+{q:"B max gewicht? / B макс. вес?",o:["2.500 kg","3.500 kg","5.000 kg","7.500 kg"],c:1},
+{q:"Slepen max? / Буксировка?",o:["15 km/u","25 km/u","50 km/u","80 km/u"],c:1},
+{q:"Lading breder? / Груз шире?",o:["Ja / Да","Nee / Нет","Markering / Маркировка","Overdag / Днём"],c:1}
+]}
+];
+
+const V = [
+  {nl:"het rijbewijs",ru:"водительское удостоверение"},{nl:"de auto / voertuig",ru:"автомобиль / ТС"},
+  {nl:"de snelheid",ru:"скорость"},{nl:"de maximumsnelheid",ru:"макс. скорость"},
+  {nl:"het kruispunt",ru:"перекрёсток"},{nl:"het verkeersbord",ru:"дорожный знак"},
+  {nl:"de voorrang",ru:"приоритет"},{nl:"de rijstrook",ru:"полоса движения"},
+  {nl:"inhalen",ru:"обгонять"},{nl:"remmen",ru:"тормозить"},
+  {nl:"de snelweg",ru:"автомагистраль"},{nl:"de bebouwde kom",ru:"населённый пункт"},
+  {nl:"de rotonde",ru:"кольцо"},{nl:"het zebrapad",ru:"пешеходный переход"},
+  {nl:"de volgafstand",ru:"дистанция"},{nl:"de dode hoek",ru:"мёртвая зона"},
+  {nl:"het verkeerslicht",ru:"светофор"},{nl:"de berm",ru:"обочина"},
+  {nl:"de vluchtstrook",ru:"аварийная полоса"},{nl:"de file",ru:"пробка"},
+  {nl:"de gordel",ru:"ремень безопасности"},{nl:"de achteruitkijkspiegel",ru:"зеркало заднего вида"},
+  {nl:"de richtingaanwijzer",ru:"указатель поворота"},{nl:"de bandenspanning",ru:"давление в шинах"},
+  {nl:"de voorruit",ru:"лобовое стекло"},{nl:"de koplampen",ru:"фары"},
+  {nl:"het dimlicht",ru:"ближний свет"},{nl:"het groot licht",ru:"дальний свет"},
+  {nl:"het mistlicht",ru:"противотуманный"},{nl:"de versnellingsbak",ru:"коробка передач"},
+  {nl:"de koppeling",ru:"сцепление"},{nl:"het gaspedaal",ru:"педаль газа"},
+  {nl:"het rempedaal",ru:"педаль тормоза"},{nl:"de handrem",ru:"ручной тормоз"},
+  {nl:"het stuur",ru:"руль"},{nl:"de claxon",ru:"клаксон"},
+  {nl:"de kentekenplaat",ru:"номерной знак"},{nl:"gladheid",ru:"гололёд"},
+  {nl:"mist",ru:"туман"},{nl:"de wegwerkzaamheden",ru:"дорожные работы"},
+  {nl:"eenrichtingsverkeer",ru:"одностороннее движение"},{nl:"de parkeerplaats",ru:"парковочное место"},
+  {nl:"de gevarendriehoek",ru:"знак аварийной остановки"},{nl:"het veiligheidshesje",ru:"жилет"},
+  {nl:"de remweg",ru:"тормозной путь"},{nl:"de reactieafstand",ru:"путь реакции"},
+  {nl:"de invoegstrook",ru:"разгонная полоса"},{nl:"de uitvoegstrook",ru:"полоса замедления"},
+  {nl:"het woonerf",ru:"жилая зона"},{nl:"de voetganger",ru:"пешеход"},
+  {nl:"de fietser",ru:"велосипедист"},{nl:"de bromfietser",ru:"мопедист"},
+  {nl:"het fietspad",ru:"велодорожка"},{nl:"de spoorwegovergang",ru:"ж/д переезд"},
+  {nl:"de tunnel",ru:"туннель"},{nl:"de nooduitgang",ru:"аварийный выход"},
+  {nl:"de motorkap",ru:"капот"},{nl:"de kofferbak",ru:"багажник"},
+  {nl:"de ruitenwissers",ru:"дворники"},{nl:"de airbag",ru:"подушка безопасности"},
+  {nl:"het schadeformulier",ru:"протокол ДТП"},{nl:"de verzekering (WA)",ru:"страховка"},
+  {nl:"het kentekenbewijs",ru:"свидетельство о регистрации"},
+  {nl:"de APK-keuring",ru:"техосмотр"},{nl:"de profieldiepte",ru:"глубина протектора"},
+  {nl:"ritsen",ru:"поочерёдное вливание"},{nl:"het matrixbord",ru:"матричное табло"},
+  {nl:"de parkeerschijf",ru:"парковочные часы"},{nl:"de stopstreep",ru:"стоп-линия"},
+  {nl:"de haaietanden",ru:"зубы акулы (разметка)"},{nl:"het bloedalcoholgehalte",ru:"уровень алкоголя"},
+  {nl:"de blaastest",ru:"алкотест"},{nl:"de tram",ru:"трамвай"},
+  {nl:"de hulpdiensten",ru:"экстренные службы"},{nl:"het zwaailicht",ru:"проблесковый маячок"},
+  {nl:"de sirene",ru:"сирена"},{nl:"de slagboom",ru:"шлагбаум"},
+  {nl:"de aanhanger",ru:"прицеп"},{nl:"het dashboard",ru:"приборная панель"},
+  {nl:"de automaat",ru:"автоматическая КПП"},{nl:"de handgeschakelde auto",ru:"механика"},
+  {nl:"de rijinstructeur",ru:"инструктор по вождению"},{nl:"het CBR",ru:"CBR (экзаменационный центр)"},
+  {nl:"slagen / zakken",ru:"сдать / провалить"},{nl:"de rijles",ru:"урок вождения"},
+  {nl:"de tolk",ru:"переводчик"},{nl:"de rijexamen",ru:"экзамен по вождению"},
+  {nl:"het theoriecertificaat",ru:"сертификат теории"},{nl:"opschakelen / terugschakelen",ru:"переключить выше / ниже"},
+  {nl:"de achteruit",ru:"задняя передача"},{nl:"de vrijstaande weg",ru:"дорога вне города"},
+  {nl:"de maximale aslast",ru:"макс. нагрузка на ось"},{nl:"het laadvermogen",ru:"грузоподъёмность"},
+  {nl:"de bumper",ru:"бампер"},{nl:"de wielklem",ru:"блокиратор колеса"},
+  {nl:"de vangrail",ru:"отбойник"},{nl:"de hectometerpaal",ru:"гектометровый столб"},
+  {nl:"stilstaan",ru:"остановка (кратко)"},{nl:"parkeren",ru:"парковка (>3 мин)"},
+  {nl:"de snorfietser",ru:"скутерист"},{nl:"het onderbord",ru:"дополнительная табличка"}
+];
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+
+function Theory({topic}){
+  return React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:8}},
+    topic.theory.map((item,i)=>React.createElement("div",{key:i,className:"theory-card",style:{borderLeftColor:topic.color}},
+      React.createElement("div",{className:"theory-nl"},item.nl),
+      React.createElement("div",{className:"theory-ru"},item.ru)
+    ))
+  );
+}
+
+function Cards({cards}){
+  const[idx,setIdx]=useState(0);
+  const[flip,setFlip]=useState(false);
+  const[sh,setSh]=useState(()=>shuffle(cards));
+  const c=sh[idx];
+  return React.createElement("div",{style:{display:"flex",flexDirection:"column",alignItems:"center",gap:20}},
+    React.createElement("div",{style:{color:"#8a90a0",fontSize:14}},idx+1+" / "+sh.length),
+    React.createElement("div",{className:"flash-card "+(flip?"back":"front"),onClick:()=>setFlip(!flip)},
+      !flip?React.createElement(React.Fragment,null,
+        React.createElement("div",{style:{color:"#ffd98e",fontSize:17,textAlign:"center",lineHeight:1.7}},c.q),
+        React.createElement("div",{className:"flash-hint"},"Нажмите для ответа / Klik voor antwoord")
+      ):React.createElement("div",{style:{color:"#7defa0",fontSize:18,textAlign:"center",fontWeight:600,lineHeight:1.6}},c.a)
+    ),
+    React.createElement("div",{style:{display:"flex",gap:12}},
+      React.createElement("button",{className:"btn",onClick:()=>{setIdx((idx-1+sh.length)%sh.length);setFlip(false)}},"← Назад"),
+      React.createElement("button",{className:"btn secondary",onClick:()=>{setSh(shuffle(cards));setIdx(0);setFlip(false)}},"🔀"),
+      React.createElement("button",{className:"btn",onClick:()=>{setIdx((idx+1)%sh.length);setFlip(false)}},"Далее →")
+    )
+  );
+}
+
+function Quiz({quiz,topicColor}){
+  const[qs]=useState(()=>shuffle(quiz));
+  const[cur,setCur]=useState(0);
+  const[sel,setSel]=useState(null);
+  const[score,setScore]=useState(0);
+  const[done,setDone]=useState(false);
+  const q=qs[cur];
+  const pick=(i)=>{
+    if(sel!==null)return;setSel(i);
+    if(i===q.c)setScore(s=>s+1);
+    setTimeout(()=>{
+      if(cur+1>=qs.length)setDone(true);
+      else{setCur(c=>c+1);setSel(null)}
+    },1200);
+  };
+  if(done){
+    const pct=Math.round(score/qs.length*100);
+    return React.createElement("div",{style:{textAlign:"center",padding:24}},
+      React.createElement("div",{className:"result-emoji"},pct>=88?"🎉":pct>=60?"💪":"📚"),
+      React.createElement("div",{className:"result-score"},score+"/"+qs.length+" ("+pct+"%)"),
+      React.createElement("div",{className:"result-sub"},"CBR: 88% нужно для сдачи"),
+      React.createElement("button",{className:"btn",onClick:()=>{setCur(0);setSel(null);setScore(0);setDone(false)}},"🔄 Ещё раз / Opnieuw")
+    );
+  }
+  return React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:12,alignItems:"center"}},
+    React.createElement("div",{style:{display:"flex",justifyContent:"space-between",width:"100%",maxWidth:540,alignItems:"center"}},
+      React.createElement("span",{style:{color:"#8a90a0",fontSize:13}},"Вопрос "+(cur+1)+"/"+qs.length),
+      React.createElement("span",{style:{color:"#8a90a0",fontSize:12}},"✅"+score+" ❌"+(cur-score))
+    ),
+    React.createElement("div",{className:"progress-bar",style:{maxWidth:540}},
+      React.createElement("div",{className:"progress-fill",style:{width:((cur+1)/qs.length*100)+"%"}})
+    ),
+    React.createElement("div",{style:{background:"rgba(255,255,255,.04)",borderRadius:14,padding:"16px 20px",width:"100%",maxWidth:540}},
+      React.createElement("div",{style:{color:"#ffd98e",fontSize:15}},q.q)
+    ),
+    React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:6,width:"100%",maxWidth:540}},
+      q.o.map((opt,i)=>{
+        let cls="quiz-option";
+        if(sel!==null){if(i===q.c)cls+=" correct";else if(i===sel)cls+=" wrong";cls+=" disabled"}
+        return React.createElement("button",{key:i,className:cls,onClick:()=>pick(i)},opt);
+      })
+    )
+  );
+}
+
+function Vocab(){
+  const[fl,setFl]=useState({});
+  const[f,setF]=useState("");
+  const filt=V.filter(v=>v.nl.toLowerCase().includes(f.toLowerCase())||v.ru.toLowerCase().includes(f.toLowerCase()));
+  return React.createElement("div",null,
+    React.createElement("input",{className:"search-input",value:f,onChange:e=>setF(e.target.value),placeholder:"🔍 Zoeken / Поиск..."}),
+    React.createElement("div",{style:{color:"#555",fontSize:12,margin:"10px 0"}},filt.length+" слов"),
+    React.createElement("div",{className:"vocab-grid"},
+      filt.map((v,i)=>React.createElement("div",{key:i,className:"vocab-item"+(fl[i]?" open":""),onClick:()=>setFl(p=>({...p,[i]:!p[i]}))},
+        React.createElement("div",{className:"vocab-nl"},v.nl),
+        fl[i]&&React.createElement("div",{className:"vocab-ru"},v.ru)
+      ))
+    )
+  );
+}
+
+function FullExam(){
+  const allQ=useMemo(()=>{
+    const a=T.flatMap(t=>t.quiz.map(q=>({...q,topic:t.tNL})));
+    return shuffle(a).slice(0,25);
+  },[]);
+  const[cur,setCur]=useState(0);
+  const[sel,setSel]=useState(null);
+  const[score,setScore]=useState(0);
+  const[done,setDone]=useState(false);
+  const[wrongs,setWrongs]=useState({});
+  const q=allQ[cur];
+  const pick=(i)=>{
+    if(sel!==null)return;setSel(i);
+    if(i===q.c)setScore(s=>s+1);
+    else setWrongs(w=>({...w,[q.topic]:(w[q.topic]||0)+1}));
+    setTimeout(()=>{
+      if(cur+1>=allQ.length)setDone(true);
+      else{setCur(c=>c+1);setSel(null)}
+    },1000);
+  };
+  if(done){
+    const pct=Math.round(score/allQ.length*100);
+    const weak=Object.entries(wrongs).sort((a,b)=>b[1]-a[1]);
+    return React.createElement("div",{style:{textAlign:"center",padding:24}},
+      React.createElement("div",{className:"result-emoji"},pct>=88?"🎉":pct>=60?"💪":"📚"),
+      React.createElement("div",{className:"result-score"},score+"/"+allQ.length+" ("+pct+"%)"),
+      React.createElement("div",{className:"result-sub"},pct>=88?"Geslaagd! Сдан!":"Niet geslaagd. Не сдан. CBR: 88%"),
+      weak.length>0&&React.createElement("div",{style:{margin:"16px auto",maxWidth:400,textAlign:"left"}},
+        React.createElement("div",{style:{color:"#ff6b6b",fontSize:13,marginBottom:8}},"Слабые темы:"),
+        weak.map(([t,n],i)=>React.createElement("div",{key:i,style:{color:"#b0b8c8",fontSize:13}},t+" — "+n+" ошибок"))
+      ),
+      React.createElement("button",{className:"btn",onClick:()=>{setCur(0);setSel(null);setScore(0);setDone(false);setWrongs({})}},"🔄 Ещё раз")
+    );
+  }
+  return React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:12,alignItems:"center"}},
+    React.createElement("div",{style:{display:"flex",justifyContent:"space-between",width:"100%",maxWidth:540}},
+      React.createElement("span",{style:{color:"#8a90a0",fontSize:13}},"Вопрос "+(cur+1)+"/"+allQ.length),
+      React.createElement("span",{style:{color:"#8a90a0",fontSize:12}},"✅"+score+" ❌"+(cur-score))
+    ),
+    React.createElement("div",{className:"progress-bar",style:{maxWidth:540}},
+      React.createElement("div",{className:"progress-fill",style:{width:((cur+1)/allQ.length*100)+"%"}})
+    ),
+    React.createElement("div",{style:{color:"#444",fontSize:11}},q.topic),
+    React.createElement("div",{style:{background:"rgba(255,255,255,.04)",borderRadius:14,padding:"16px 20px",width:"100%",maxWidth:540}},
+      React.createElement("div",{style:{color:"#ffd98e",fontSize:15}},q.q)
+    ),
+    React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:6,width:"100%",maxWidth:540}},
+      q.o.map((opt,i)=>{
+        let cls="quiz-option";
+        if(sel!==null){if(i===q.c)cls+=" correct";else if(i===sel)cls+=" wrong";cls+=" disabled"}
+        return React.createElement("button",{key:i,className:cls,onClick:()=>pick(i)},opt);
+      })
+    )
+  );
+}
+
+function ExamInfo(){
+  return React.createElement("div",null,
+    React.createElement("div",{className:"exam-box"},
+      React.createElement("h3",{style:{color:"#ffd98e",fontSize:17,marginBottom:10}},"CBR theorie-examen 2025/2026"),
+      React.createElement("p",{style:{color:"#b0b8c8",fontSize:14,lineHeight:1.8}},
+        "С апреля 2025: ",React.createElement("b",{style:{color:"#ffd98e"}},"50 вопросов за 30 минут"),
+        ", минимум ",React.createElement("b",{style:{color:"#ffd98e"}},"44 правильно")," (88%). ",
+        "С переводчиком (tolk): 45 минут. Три раздела объединены в один."
+      )
+    ),
+    React.createElement("div",{className:"tip-box"},
+      React.createElement("h4",{style:{color:"#7defa0",fontSize:15,marginBottom:10}},"Советы / Tips"),
+      ["✅ Учите применение правил в ситуациях",
+       "✅ Тренируйтесь с ограничением по времени (36 сек/вопрос)",
+       "✅ «Всегда» и «никогда» — часто неправильные ответы",
+       "✅ Можно сдавать с переводчиком (tolk) — 45 мин",
+       "✅ Рекомендуемые приложения: iTheorie, Theorie.nl",
+       "✅ 30-60 мин/день в течение 2-4 недель",
+       "✅ Права на автомате — это нормально и практично!"].map((t,i)=>
+        React.createElement("div",{key:i,className:"tip-item"},t)
+      )
+    )
+  );
+}
+
+function App(){
+  const[view,setView]=useState("home");
+  const[topicId,setTopicId]=useState(null);
+  const[mode,setMode]=useState("theory");
+  const topic=T.find(t=>t.id===topicId);
+  const goHome=()=>{setView("home");setTopicId(null);setMode("theory")};
+  const totalC=T.reduce((s,t)=>s+t.cards.length,0);
+  const totalQ=T.reduce((s,t)=>s+t.quiz.length,0);
+
+  return React.createElement("div",null,
+    React.createElement("header",{className:"header"},
+      React.createElement("div",{style:{display:"flex",alignItems:"center",gap:12,cursor:"pointer"},onClick:goHome},
+        React.createElement("span",{style:{fontSize:28}},"🚘"),
+        React.createElement("div",null,
+          React.createElement("h1",null,"Rijtheorie NL"),
+          React.createElement("div",{className:"sub"},T.length+" тем • "+V.length+" слов • "+totalQ+" вопросов")
+        )
+      ),
+      view!=="home"&&React.createElement("button",{className:"back-btn",onClick:goHome},"← Меню")
+    ),
+    React.createElement("main",{className:"main"},
+      view==="home"&&React.createElement("div",null,
+        React.createElement("div",{className:"welcome"},
+          React.createElement("h2",null,"Добро пожаловать! Welkom!"),
+          React.createElement("p",null,"Полная подготовка к CBR 2025/2026. "+T.length+" тем, "+totalC+" карточек, "+totalQ+" вопросов, "+V.length+" слов. NL + RU.")
+        ),
+        React.createElement("button",{className:"nav-btn",onClick:()=>setView("examinfo")},
+          React.createElement("span",{className:"icon"},"📝"),
+          React.createElement("div",null,
+            React.createElement("div",{className:"label",style:{color:"#a0a8ff"}},"Об экзамене CBR 2025"),
+            React.createElement("div",{className:"desc"},"50 вопросов, 30 мин, 88%")
+          ),
+          React.createElement("span",{className:"arrow"},"→")
+        ),
+        React.createElement("div",{className:"section-label"},"Темы / Onderwerpen"),
+        T.map(t=>React.createElement("button",{key:t.id,className:"topic-btn",onClick:()=>{setTopicId(t.id);setView("topic");setMode("theory")}},
+          React.createElement("span",{className:"topic-icon"},t.icon),
+          React.createElement("div",{style:{flex:1}},
+            React.createElement("div",{className:"topic-title",style:{color:t.color}},t.tNL),
+            React.createElement("div",{className:"topic-sub"},t.tRU)
+          ),
+          React.createElement("div",{className:"topic-stats"},t.cards.length+"🗂 "+t.quiz.length+"✅")
+        )),
+        React.createElement("button",{className:"nav-btn",onClick:()=>setView("vocab")},
+          React.createElement("span",{className:"icon"},"📖"),
+          React.createElement("div",null,
+            React.createElement("div",{className:"label",style:{color:"#7defa0"}},"Woordenlijst / Словарь"),
+            React.createElement("div",{className:"desc"},V.length+" слов")
+          ),
+          React.createElement("span",{className:"arrow"},"→")
+        ),
+        React.createElement("button",{className:"nav-btn",style:{marginTop:6,background:"rgba(240,160,48,.06)",borderColor:"rgba(240,160,48,.15)"},onClick:()=>setView("fullquiz")},
+          React.createElement("span",{className:"icon"},"🏆"),
+          React.createElement("div",null,
+            React.createElement("div",{className:"label",style:{color:"#ffd98e"}},"Пробный экзамен"),
+            React.createElement("div",{className:"desc"},"25 случайных вопросов из всех тем")
+          ),
+          React.createElement("span",{className:"arrow"},"→")
+        )
+      ),
+      view==="examinfo"&&React.createElement(ExamInfo,null),
+      view==="fullquiz"&&React.createElement(FullExam,{key:Date.now()}),
+      view==="vocab"&&React.createElement("div",null,
+        React.createElement("div",{style:{display:"flex",alignItems:"center",gap:12,marginBottom:16}},
+          React.createElement("span",{style:{fontSize:26}},"📖"),
+          React.createElement("div",null,
+            React.createElement("h2",{style:{color:"#7defa0",fontSize:18}},"Woordenlijst"),
+            React.createElement("p",{style:{color:"#666",fontSize:12}},"Нажмите для перевода / Klik voor vertaling")
+          )
+        ),
+        React.createElement(Vocab,null)
+      ),
+      view==="topic"&&topic&&React.createElement("div",null,
+        React.createElement("div",{style:{display:"flex",alignItems:"center",gap:12,marginBottom:16}},
+          React.createElement("span",{style:{fontSize:28}},topic.icon),
+          React.createElement("div",null,
+            React.createElement("h2",{style:{color:topic.color,fontSize:18,fontWeight:700}},topic.tNL),
+            React.createElement("p",{style:{color:"#777",fontSize:13}},topic.tRU)
+          )
+        ),
+        React.createElement("div",{className:"mode-tabs"},
+          [{k:"theory",l:"📖 Теория"},{k:"cards",l:"🗂 Карточки"},{k:"quiz",l:"✅ Тест"}].map(m=>
+            React.createElement("button",{key:m.k,className:"mode-tab"+(mode===m.k?" active":""),
+              style:mode===m.k?{background:topic.color}:{},
+              onClick:()=>setMode(m.k)},m.l)
+          )
+        ),
+        mode==="theory"&&React.createElement(Theory,{topic:topic}),
+        mode==="cards"&&React.createElement(Cards,{cards:topic.cards,key:topic.id}),
+        mode==="quiz"&&React.createElement(Quiz,{quiz:topic.quiz,topicColor:topic.color,key:topic.id+"q"})
+      )
+    ),
+    React.createElement("footer",{className:"footer"},"Rijtheorie NL — CBR theorie-examen 2025/2026 🇳🇱🇺🇦")
+  );
+}
+
+ReactDOM.render(React.createElement(App),document.getElementById("root"));
+</script>
+</body>
+</html>
